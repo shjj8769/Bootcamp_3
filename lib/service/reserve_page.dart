@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/user/my_page.dart';
+import 'package:movie_app/util/message.dart';
 
 class ReservePage extends StatefulWidget {
   const ReservePage({super.key});
@@ -16,10 +16,10 @@ class _ReservePageState extends State<ReservePage> {
   late bool actionValue;   // 액션 장르 확인
   late bool thrillerValue; // 스릴러 장르 확인
   late bool romanceValue;  // 로맨스 장르 확인
-  late List<Movie> movieList; // 영화 목록
   late String selectedDatePicker; // User가 선택한 날짜
   late DateTime date;             // 날짜
-  late List<String> checkTypeMovieImage; // image출력 관리 리스트
+  late List<Movie> checkTypeMovieImage; // image출력 관리 리스트
+  late int selectMovieIndex; // 선택된 포스터의 인덱스 값 확인
 
   @override
   void initState() {
@@ -27,125 +27,53 @@ class _ReservePageState extends State<ReservePage> {
     actionValue = false;
     thrillerValue = false;
     romanceValue = false;
-    movieList = [];
+    Message.movieList = [];
     selectedDatePicker = '${DateTime.now().toString().substring(0, 10)}'; // 초기값을 현재 날짜로 조정
     date = DateTime.now();
-    addData();   // movieList에 값 추가
+    Message.addData();   // Message.moveList에 값 추가
     checkTypeMovieImage = []; 
+    selectMovieIndex = -1;  // 초기에 선택된 값이 없게 하도록 하기 위해서 음수로 설정
   }
 
-  void addData(){
-    // ---------액션------------
-    movieList.add(Movie(
-      imagePath: 'images/odyssey.png', 
-      movieName: '오디세이', 
-      movieType: '액션', 
-      actor: '젠데이아', 
-      screenTime: 173, 
-      releaseDate: DateTime(2026,08,06))
-      );
-    movieList.add(Movie(
-      imagePath: 'images/spiderman.png', 
-      movieName: '스파이더 맨 브랜드 뉴 데이', 
-      movieType: '액션', 
-      actor: '톰 홀랜드', 
-      screenTime: 145, 
-      releaseDate: DateTime(2026,07,29))
-      );
-    movieList.add(Movie(
-      imagePath: 'images/theoutlaws.png', 
-      movieName: '범죄도시 4', 
-      movieType: '액션', 
-      actor: '마동석', 
-      screenTime: 109, 
-      releaseDate: DateTime(2024,04,24))
-      );
-    // ----------로맨스-------------
-    movieList.add(Movie(
-      imagePath: 'images/titanic.png', 
-      movieName: '타이타닉', 
-      movieType: '로맨스', 
-      actor: '레오나르도 디카프리오', 
-      screenTime: 195, 
-      releaseDate: DateTime(1998,02,20))
-      );
-    movieList.add(Movie(
-      imagePath: 'images/abouttime.png', 
-      movieName: '어바웃 타임', 
-      movieType: '로맨스', 
-      actor: '도널 글리슨', 
-      screenTime: 123, 
-      releaseDate: DateTime(2013,12,05))
-      );
-    movieList.add(Movie(
-      imagePath: 'images/oncewewereus.png', 
-      movieName: '만약에 우리', 
-      movieType: '로맨스', 
-      actor: '구교환, 문가영', 
-      screenTime: 115, 
-      releaseDate: DateTime(2025,12,31))
-      );
-    // ---------스릴러-----------
-    movieList.add(Movie(
-      imagePath: 'images/salmokji.png', 
-      movieName: '살목지', 
-      movieType: '스릴러', 
-      actor: '김혜윤', 
-      screenTime: 95, 
-      releaseDate: DateTime(2026,04,08))
-      );
-    movieList.add(Movie(
-      imagePath: 'images/getout.png', 
-      movieName: '겟 아웃', 
-      movieType: '스릴러', 
-      actor: '대니얼 칼루야', 
-      screenTime: 104, 
-      releaseDate: DateTime(2017,05,17))
-      );
-    movieList.add(Movie(
-      imagePath: 'images/backrooms.png', 
-      movieName: '백룸', 
-      movieType: '스릴러', 
-      actor: '추이텔 에지오프', 
-      screenTime: 110, 
-      releaseDate: DateTime(2026,05,27))
-      );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('예매하기'),
-        backgroundColor: Colors.purple,
+        backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
         centerTitle: false,
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
-              width: 300,
-              child: OutlinedButton(
-                onPressed: (){
-                  datePick();
-                },
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadiusGeometry.circular(4)
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: SizedBox(
+                width: 300,
+                child: OutlinedButton(
+                  onPressed: (){
+                    datePick();
+                  },
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadiusGeometry.circular(4)
+                    )
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_month_outlined,
+                        color: Colors.purple,
+                      ),
+                      Text(selectedDatePicker),
+                    ],
                   )
                 ),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.calendar_month_outlined,
-                      color: Colors.purple,
-                    ),
-                    Text(selectedDatePicker),
-                  ],
-                )
               ),
             ),
             Row(
@@ -178,34 +106,57 @@ class _ReservePageState extends State<ReservePage> {
             ),
             Text('상영중인 영화 ${checkTypeMovieImage.length}편'),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
                   height: 200,
                   width: 400,
-                  child: ListView.builder(
-                    itemCount: checkTypeMovieImage.length,
-                    itemBuilder: (context, index){
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                          onTap: (){
-                            Border.all(color: Colors.yellow);
-                            setState(() {});
-                          },
-                          child: Image.asset(
-                            checkTypeMovieImage[index],
+                  child: Container(
+                    child: ListView.builder(
+                      itemCount: checkTypeMovieImage.length,
+                      itemBuilder: (context, index){
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: (){
+                              selectMovieIndex = index;
+                              setState(() {});
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: selectMovieIndex == index ? Colors.yellow : Colors.white,
+                                  width: 3
+                                ),
+                                borderRadius: BorderRadius.circular(4)
+                              ),
+                              child: Image.asset(
+                                checkTypeMovieImage[index].imagePath,
+                              ),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    scrollDirection: Axis.horizontal,
+                        );
+                      },
+                      scrollDirection: Axis.horizontal,
+                    ),
                   ),
                 )
               ],
             ),
-            Container(
-              child: Text(
-                '예매 정보\n예매일 : ${selectedDatePicker}\n영화 제목 : ${movieList[1].movieName}'
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: SizedBox(
+                width: 350,
+                height: 70,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.purpleAccent),
+                    borderRadius: BorderRadius.circular(4)
+                  ),
+                  child: Text(
+                    '예매 정보\n예매일 : ${selectedDatePicker}\n영화 제목 : ${selectMovieIndex != -1 ? checkTypeMovieImage[selectMovieIndex].movieName : '선택 안됨'}'
+                  ),
+                ),
               ),
             ),
             SizedBox(
@@ -213,10 +164,11 @@ class _ReservePageState extends State<ReservePage> {
               height: 50,
               child: ElevatedButton(
                 onPressed: (){
+                  Get.back();
                   Get.to(MyPage());
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple,
+                  backgroundColor: Colors.deepPurple,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadiusGeometry.circular(4)
@@ -247,16 +199,17 @@ class _ReservePageState extends State<ReservePage> {
   }
 
   void checkType(){      // 사용자가 선택한 장르의 포스터만 출력
+    selectMovieIndex = -1; // 사용자 선택 값 초기화
     checkTypeMovieImage = []; // 계속 추가 되는 상황 방지
-    for (var movie in movieList) {
+    for (var movie in Message.movieList) {
       if(actionValue && movie.movieType == '액션'){ 
-        checkTypeMovieImage.add(movie.imagePath);  // 액션 장르 선택 시 액션 장르를 movieType으로 가지고 있는 영화의 imagePath를 가져옴
+        checkTypeMovieImage.add(movie);  // 액션 장르 선택 시 액션 장르를 movieType으로 가지고 있는 영화의 imagePath를 가져옴
       }
       if(romanceValue && movie.movieType == '로맨스'){
-        checkTypeMovieImage.add(movie.imagePath);
+        checkTypeMovieImage.add(movie);
       }
       if(thrillerValue && movie.movieType == '스릴러'){
-        checkTypeMovieImage.add(movie.imagePath);
+        checkTypeMovieImage.add(movie);
       }
     }
     setState(() {});
