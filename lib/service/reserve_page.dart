@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/model/movie.dart';
+import 'package:movie_app/model/reservation.dart';
 import 'package:movie_app/user/my_page.dart';
 import 'package:movie_app/util/message.dart';
 
@@ -164,9 +165,18 @@ class _ReservePageState extends State<ReservePage> {
               height: 50,
               child: ElevatedButton(
                 onPressed: (){
-                  Get.back();
-                  Get.to(MyPage());
-                },
+                    if(selectMovieIndex == -1){
+                      return; // 영화 선택 안 했으면 예매 진행 안 함
+                    }
+                    Message.reserveList.add(
+                      Reservation(
+                        movieName: checkTypeMovieImage[selectMovieIndex].movieName,
+                        reserveDate: selectedDatePicker,
+                      ),
+                    );
+                    Get.back();
+                    Get.to(MyPage());
+                  },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,
                   foregroundColor: Colors.white,
