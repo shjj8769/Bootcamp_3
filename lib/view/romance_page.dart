@@ -96,26 +96,31 @@ class _RomancePageState extends State<RomancePage> {
               ),
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Get.to(ReviewViewPage());
-            },
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(50, 60),
-              backgroundColor: Colors.deepPurpleAccent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusGeometry.circular(30),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.message, size: 30),
-                Text(
-                  '리뷰 보기',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          SizedBox(
+            width: 250,
+            child: ElevatedButton(
+              onPressed: () {
+                Get.to(ReviewViewPage());
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(50, 40),
+                backgroundColor: Colors.deepPurpleAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadiusGeometry.circular(30),
                 ),
-              ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                    Icon(Icons.message, size: 30, color: Colors.white),
+                    Text(
+                      '리뷰 보기',
+                      style: TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                    ),
+                ],
+              ),
             ),
           ),
         ],
