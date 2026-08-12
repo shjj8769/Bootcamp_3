@@ -12,11 +12,11 @@ class RomancePage extends StatefulWidget {
 
 class _RomancePageState extends State<RomancePage> {
   //Property
-  late List<String> movieImage;
-  late List<String> movieName;
-  late List<String> movieActor;
-  late List<String> movieInfo;
-  late int movieNum;
+  late List<String> movieImage; // 영화포스터 사진
+  late List<String> movieName; // 영화 제목
+  late List<String> movieActor; // 영화배우 및 개봉일
+  late List<String> movieInfo; // 영화정보
+  late int movieNum; // 리스트인덱스
 
   @override
   void initState() {
@@ -90,12 +90,13 @@ class _RomancePageState extends State<RomancePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(movieActor[index], style: TextStyle(fontSize: 10)),
+                    Text(movieActor[index], style: TextStyle(fontSize: 12)),
                   ],
                 ),
               ),
             ),
           ),
+          SizedBox(height: 30),
           SizedBox(
             width: 250,
             child: ElevatedButton(
