@@ -21,20 +21,21 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     userIdController = TextEditingController();
     passwordController = TextEditingController();
-    initStorage();
+    // initStorage();
   }
 
   @override
   void dispose() {
-    disposeStorage();
+    // disposeStorage();
     super.dispose();
   }
 
-    void disposeStorage(){
-    box.erase();
-  }
+  //   void disposeStorage(){
+  //   box.erase();
+  // }
 
     void initStorage(){ // 항목
+    box.write('isLogin', false);
     box.write('p_userId', "");
     box.write('p_password', "");
   }
@@ -53,13 +54,13 @@ class _LoginPageState extends State<LoginPage> {
               height: 100,
             ),
             Text(
-              '시네마루',
+              'CINE Log',
               style: TextStyle(
                 fontSize: 30,
               ),
             ),
             Text(
-              '영화를 기록하는 가장 쉬운 방법',
+              '영화를 고르고, 예매하고, 기록하는 하나의 앱',
               style: TextStyle(
                 fontSize: 12,
               ),
@@ -82,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: passwordController,
+                obscureText: true,    // 비밀번호 가리기
                 decoration: InputDecoration(
                   labelText: '비밀번호',
                   icon: Icon(Icons.lock_outlined),
@@ -121,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
           onPressed: (){
             saveStorage();
             Get.back();
-            Get.to(Home());
+            Get.back(result: true);
           }, 
           child: Text('확인'),
         ),
@@ -149,10 +151,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-    void saveStorage(){
+  void saveStorage(){
+    box.write('isLogin', true);     // 로그인 성공 저장
     box.write('p_userId', userIdController.text.trim());
     box.write('p_password', passwordController.text.trim());
   }
-
 
 } // class 
