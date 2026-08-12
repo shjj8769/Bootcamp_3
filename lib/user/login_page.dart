@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:movie_app/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -150,11 +151,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-    void saveStorage(){
+  void saveStorage(){
     box.write('isLogin', true);     // 로그인 성공 저장
     box.write('p_userId', userIdController.text.trim());
     box.write('p_password', passwordController.text.trim());
   }
-
 
 } // class 
