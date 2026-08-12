@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/service/reserve_page.dart';
 import 'package:movie_app/service/review_view_page.dart';
+import 'package:movie_app/service/review_write_page.dart';
 import 'package:movie_app/user/login_page.dart';
 import 'package:movie_app/user/my_page.dart';
 import 'package:movie_app/view/action_page.dart';
@@ -124,8 +125,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
             ),
             ElevatedButton(
               onPressed: () {
-                if(isLogin == true){
-                  Get.to(ReviewViewPage());
+                if(isLogin == false){
+                  Get.to(ReviewWritePage());
                 }else{
                   errorDialog();
                 }
