@@ -69,28 +69,6 @@ class _ReviewViewPageState extends State<ReviewViewPage> {
                 }
               ),
             ),
-            SizedBox(
-              width: 380,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  borderRadius: BorderRadius.circular(4)
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      '숨김처리 된 리뷰 1개는\n목록에 표시되지 않습니다.',
-                      style: TextStyle(
-                        fontSize: 15
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
           ],
         ),
       ),

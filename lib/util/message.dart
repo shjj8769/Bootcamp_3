@@ -1,9 +1,11 @@
 import 'package:movie_app/model/movie.dart';
 import 'package:movie_app/model/review.dart';
+import 'package:movie_app/model/reservation.dart';
 
 class Message {
   static List<Movie> movieList = [];
   static List<Review> reviewList = [];
+    static List<Reservation> reserveList = [];
   static int movieIndex = 0;
   static int hideReviewNum = 0;
 
