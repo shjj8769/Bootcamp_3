@@ -10,6 +10,6 @@ class ReviewViewPage extends StatefulWidget {
 class _ReviewViewPageState extends State<ReviewViewPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Placeholder();
   }
 }
