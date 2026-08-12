@@ -193,6 +193,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
                 Icons.warning,
                 color: Colors.red,
               ),
+              SizedBox(width: 5),
               Text('경고'),
             ],
           ),

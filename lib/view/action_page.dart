@@ -12,11 +12,11 @@ class ActionPage extends StatefulWidget {
 
 class _ActionPageState extends State<ActionPage> {
   //Property
-  late List<String> movieImage;
-  late List<String> movieName;
-  late List<String> movieActor;
-  late List<String> movieInfo;
-  late int movieNum;
+  late List<String> movieImage; // 영화포스터 사진
+  late List<String> movieName; // 영화 제목
+  late List<String> movieActor; // 영화배우 및 개봉일
+  late List<String> movieInfo; // 영화정보
+  late int movieNum; // 리스트인덱스
 
   @override
   void initState() {
@@ -38,35 +38,35 @@ class _ActionPageState extends State<ActionPage> {
     return Scaffold(
       body: Column(
         children: [
-          Stack(
-            children: [
-              Image.asset(
-                movieImage[movieNum],
-                width: 350,
-                height: 600,
-                fit: BoxFit.contain,
-              ),
-              Positioned(
-                top: 490,
-                left: 10,
-                child: Column(
-                  children: [
-                    Text(
-                      movieName[movieNum],
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+          Container(
+            width: 350,
+            height: 600,
+            alignment: Alignment.center,
+            child: Stack(
+              children: [
+                Image.asset(movieImage[movieNum], fit: BoxFit.contain),
+                Positioned(
+                  bottom: 16,
+                  left: 10,
+                  child: Column(
+                    children: [
+                      Text(
+                        movieName[movieNum],
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    Text(
-                      movieInfo[movieNum],
-                      style: TextStyle(fontSize: 12, color: Colors.white),
-                    ),
-                  ],
+                      Text(
+                        movieInfo[movieNum],
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           CupertinoPicker(
             itemExtent: 60,
@@ -87,12 +87,13 @@ class _ActionPageState extends State<ActionPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(movieActor[index], style: TextStyle(fontSize: 10)),
+                    Text(movieActor[index], style: TextStyle(fontSize: 12)),
                   ],
                 ),
               ),
             ),
           ),
+          SizedBox(height: 30),
           SizedBox(
             width: 250,
             child: ElevatedButton(
