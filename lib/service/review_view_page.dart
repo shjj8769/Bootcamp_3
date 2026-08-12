@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_app/model/review.dart';
+import 'package:movie_app/util/message.dart';
 
 class ReviewViewPage extends StatefulWidget {
   const ReviewViewPage({super.key});
@@ -10,16 +12,7 @@ class ReviewViewPage extends StatefulWidget {
 
 class _ReviewViewPageState extends State<ReviewViewPage> {
   late List<Review> reviewList;
-  late List<Review> hideReviewList;
 
-  @override
-  void initState() {
-    super.initState();
-    reviewList = [];
-    hideReviewList = [];
-  }
-  
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,29 +25,71 @@ class _ReviewViewPageState extends State<ReviewViewPage> {
       body: Center(
         child: Column(
           children: [
-            Text('등록된 리뷰 ${reviewList.length}개'),
-            ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: reviewList.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.person),
-                          Text(reviewList[index].reviewName),
-                        ],
+            SizedBox(
+              height: 500, // 최대 높이 설정
+              child: ListView.builder(
+                itemCount: Message.reviewList.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: SizedBox(
+                      width: 350,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.deepPurpleAccent),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.person),
+                                Text('작성자 : User')
+                              ],
+                            ),
+                            Text(
+                              '영화 제목 : ${Message.reviewList[index].reviewMovie}',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '리뷰 내용 : ${Message.reviewList[index].reviewText}',
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      Text(reviewList[index].reviewMovie),
-                      Text(reviewList[index].reviewText),
-                    ],
-                  ),
-                );
-              }
+                    ),
+                  );
+                }
+              ),
             ),
-            Container(
-              child: Text('숨김 처리된 리뷰는 ${hideReviewList.length}개는 \n이 목록에 표시되지 않습니다.'),
+            SizedBox(
+              width: 380,
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  borderRadius: BorderRadius.circular(4)
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '숨김처리 된 리뷰 1개는\n목록에 표시되지 않습니다.',
+                      style: TextStyle(
+                        fontSize: 15
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             )
           ],
         ),

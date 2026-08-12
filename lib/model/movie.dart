@@ -3,6 +3,7 @@ class Movie {
   String movieName;
   String movieType;
   String actor;
+  String movieMannager;
   int screenTime;
   DateTime releaseDate;
 
@@ -14,6 +15,7 @@ class Movie {
       required this.actor,
       required this.screenTime,
       required this.releaseDate,
+      required this.movieMannager,
     }
   );
 }
