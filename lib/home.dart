@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:movie_app/service/reserve_page.dart';
+import 'package:movie_app/service/review_view_page.dart';
+import 'package:movie_app/user/login_page.dart';
+import 'package:movie_app/user/my_page.dart';
 import 'package:movie_app/view/action_page.dart';
 import 'package:movie_app/view/romance_page.dart';
 import 'package:movie_app/view/thriller_page.dart';
@@ -14,25 +19,27 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
   // Property
   late TabController tabController;   // 상단 tabbarview
 
+  late bool isLogin;
+
 
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 3, vsync: this);
-
+    isLogin = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bootcamp Movie'),
+        title: const Text('Cine Log'),
+        backgroundColor: Colors.deepPurpleAccent,
+        foregroundColor: Colors.white,
         actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              // 
-            },
+          Icon(
+            Icons.search,
+            color: Colors.white,
           ),
         ],
         bottom: TabBar(
@@ -47,7 +54,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
             Tab(
               text: '로맨스',
             ),
-          ]
+          ],
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.black,
         ),
       ),
       body: TabBarView(
@@ -63,46 +72,162 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin{
           children: [
             UserAccountsDrawerHeader(
               currentAccountPicture: Icon(
-                Icons.account_circle, 
+                Icons.account_circle,
+                color: Colors.white, 
                 size: 50
               ),
-              currentAccountPictureSize: Size(10, 100),
+              currentAccountPictureSize: Size(10, 70),
               accountName: Text("UserName"), 
               accountEmail: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("user@email.com"),
+                  SizedBox(
+                    width: 70,
+                  ),
                   ElevatedButton(
                     onPressed: () {
-                      //
+                      Get.to(LoginPage());
                     }, 
                     child: Text('로그인')
                   ),
                 ],
               ),
             ),
-
-            ElevatedButton(
-              onPressed: () {
-                //
-              }, 
-              child: Text('마이페이지')
+            SizedBox(
+              height: 500,
             ),
             ElevatedButton(
               onPressed: () {
-                //
+                if(isLogin == true){
+                  Get.to(MyPage());
+                }else{
+                  errorDialog();
+                }
               }, 
-              child: Text('영화 리뷰')
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.person),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text('마이페이지'),
+                ],
+              )
+            ),
+            SizedBox(
+              height: 10,
             ),
             ElevatedButton(
               onPressed: () {
-                //
+                if(isLogin == true){
+                  Get.to(ReviewViewPage());
+                }else{
+                  errorDialog();
+                }
               }, 
-              child: Text('예매하기')
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.star),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text('리뷰 작성'),
+                ],
+              )
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if(isLogin == true){
+                  Get.to(ReservePage());
+                }else{
+                  errorDialog();
+                }
+              }, 
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.confirmation_num),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text('예매하기'),
+                ],
+              )
             ),
           ],
         ),
       ),
     );
+  } // build
+
+
+
+
+  // =============== Function ================
+  void errorDialog(){
+    showDialog(
+      context: context, 
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Icon(
+                Icons.warning,
+                color: Colors.red,
+              ),
+              Text('경고'),
+            ],
+          ),
+          content: Text('로그인을 해주세요.'),
+          actions: [
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => Get.back(), 
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black
+                    ),
+                    child: Text('취소')
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.to(LoginPage());
+                    }, 
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple[300],
+                      foregroundColor: Colors.white
+                    ),
+                    child: Text("로그인 페이지 이동")
+                  ),
+                ],
+              ),
+            )
+          ],
+        );
+      },
+    );
   }
-}
+} // class
